@@ -1,33 +1,33 @@
 import {test, expect} from '@playwright/test'
 import { LoginPage } from '../../page-objects/LoginPage'
 import { HomePage } from '../../page-objects/HomePage'
+import { ShowTransactionsPage } from '../../page-objects/ShowTransactionsPage'
 
 test.describe('Show transactions', () => {
     let homePage: HomePage
     let loginPage: LoginPage
+    let showTransactionsPage: ShowTransactionsPage
 
     test.beforeEach(async ({page}) => {
         homePage = new HomePage(page)
         loginPage = new LoginPage(page)
+        showTransactionsPage = new ShowTransactionsPage(page)
 
         await homePage.visit()
         await homePage.clickOnSignIn()
         await loginPage.login('username', 'password')
         await page.goto('http://zero.webappsecurity.com/index.html')
-        await page.click('#account_activity_link')
+        await homePage.clickOnAccountActivity()
     })
 
-    test('Load has 2 transactions', async({page}) => {
-        await page.selectOption('#aa_accountId', '4')
-        const table = await page.locator('#all_transactions_for_account tbody tr')
-        await expect(table).toHaveCount(2)
+    test('Loan has 2 transactions', async({page}) => {
+        await showTransactionsPage.chooseAccount('4')
+        await showTransactionsPage.assertNumberOfRows(2)
     })
 
     test('Brokerage has no transactions', async({page}) => {
-        await page.selectOption('#aa_accountId', '6')
-        const message = await page.locator('.well')
-        await expect(message).toContainText('No results.')
-        const table = await page.locator('#all_transactions_for_account tbody tr')
-        await expect(table).toHaveCount(0)
+        await showTransactionsPage.chooseAccount('6')
+        await showTransactionsPage.messageIsPresent()
+        await showTransactionsPage.assertNumberOfRows(0)
     })
 })

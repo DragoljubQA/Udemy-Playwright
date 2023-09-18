@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 import { LoginPage } from '../../page-objects/LoginPage'
 import { HomePage } from '../../page-objects/HomePage'
 
-test.describe.only('Login / Logout Flow', () => {
+test.describe('Login / Logout Flow', () => {
     let loginPage: LoginPage
     let homePage: HomePage
     //Before Hook

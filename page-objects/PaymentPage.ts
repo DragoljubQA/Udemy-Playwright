@@ -11,6 +11,7 @@ export class PaymentPage {
     readonly descriptionInput: Locator
     readonly submitPaymentButton: Locator
     readonly message: Locator
+    readonly purchaseForeignCurrencyButton: Locator
 
     constructor(page:Page) {
         this.page = page
@@ -23,6 +24,7 @@ export class PaymentPage {
         this.descriptionInput = page.locator('#sp_description')
         this.submitPaymentButton = page.locator('#pay_saved_payees')
         this.message = page.locator('#alert_content > span')
+        this.purchaseForeignCurrencyButton = page.locator('text=Purchase Foreign Currency')
     }
 
     async createPayment() {
@@ -39,6 +41,10 @@ export class PaymentPage {
     async successMessage() {
         await expect(this.message).toBeVisible()
         await expect(this.message).toContainText('The payment was successfully submitted')
+    }
+
+    async clickOnPurchaseForeignCurrencyTab() {
+        await this.purchaseForeignCurrencyButton.click()
     }
 
 }
