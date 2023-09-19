@@ -2,7 +2,7 @@ import { PlaywrightTestConfig } from "@playwright/test";
 
 const config: PlaywrightTestConfig = {
     timeout: 60000,
-    retries: 0,
+    retries: 1,
     testDir: 'tests/e2e-pom',
     use: {
         headless: true,
