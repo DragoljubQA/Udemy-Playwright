@@ -5,7 +5,7 @@ const config: PlaywrightTestConfig = {
     retries: 0,
     testDir: "tests/tips",
     use: {
-        headless: true,
+        headless: false,
         viewport: { width: 1280, height: 720},
         actionTimeout: 15000,
         ignoreHTTPSErrors: true,
